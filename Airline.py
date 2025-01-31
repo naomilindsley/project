@@ -56,14 +56,14 @@ if page == "Exploratory Data Analysis":
     eda_type = st.multiselect("Choose visualization(s):", ["Histogram", "Box Plot", "Bar Plot"])
 
         # Histogram
-        if "Histogram" in eda_type:
+if "Histogram" in eda_type:
             st.subheader("Histogram")
             selected_col = st.selectbox("Select a numerical column:", num_cols, key="histogram")
             if selected_col:
                 st.plotly_chart(px.histogram(df, x=selected_col, title=f"Histogram of {selected_col}"))
 
         # Box Plot
-        if "Box Plot" in eda_type:
+if "Box Plot" in eda_type:
             st.subheader("Box Plot")
             y_col = st.selectbox("Select a column for Box Plot (y-axis):", num_cols, key="box_y")
             x_col = st.selectbox("Select a column for Box Plot (x-axis):", obj_cols, key="box_x")
@@ -71,13 +71,13 @@ if page == "Exploratory Data Analysis":
                 st.plotly_chart(px.box(df, x=x_col, y=y_col, title=f"Box Plot: {y_col} vs {x_col}", color=x_col))
 
         # Bar Plot
-        if "Bar Plot" in eda_type:
+if "Bar Plot" in eda_type:
             st.subheader("Bar Plot")
             x_col = st.selectbox("Select x-axis (categorical):", obj_cols, key="bar_x")
             y_col = st.selectbox("Select y-axis (numerical):", num_cols, key="bar_y")
             if x_col and y_col:
                 st.plotly_chart(px.bar(df, x=x_col, y=y_col, title=f"Bar Plot: {y_col} by {x_col}", color=x_col))
-    else:
+else:
         st.warning("Please upload a dataset to perform EDA.")
 
 # Extras Page
