@@ -12,13 +12,11 @@ page = st.sidebar.selectbox("Select a Page", ["Home", "Data Overview", "Explorat
 # Function to load data
 def load_data(uploaded_file):
     try:
-        df = pd.read_excel(uploaded_file)
+        df = pd.read_csv(uploaded_file)
         return df
     except Exception as e:
-        st.error(f"Error: {e}")
+        st.error(f"Error: Unable to read the uploaded file. {e}")
         return None
-
-
 
 # Data Preparation
 st.title("Upload and Display Dataset")
@@ -61,7 +59,7 @@ if page == "Data Overview":
         st.warning("Please upload a dataset to view the overview.")
 
 # Exploratory Data Analysis (EDA) Page
-elif page == "Exploratory Data Analysis":
+if page == "Exploratory Data Analysis":
     st.title("Exploratory Data Analysis 📊")
     if df is not None:
         # Identify numeric and categorical columns
@@ -98,7 +96,7 @@ elif page == "Exploratory Data Analysis":
         st.warning("Please upload a dataset to perform EDA.")
 
 # Extras Page
-elif page == "Extras":
+if page == "Extras":
     st.title("Useful Information")
     st.subheader("Airline Demand-Supply Imbalance is Good for Revenue, Tough on Customer Experience, Says J.D. Power")
     st.write(
