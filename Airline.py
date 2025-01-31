@@ -10,7 +10,14 @@ st.set_page_config(page_title="Airline Satisfaction Prediction", page_icon="âœˆï
 page = st.sidebar.selectbox("Select a Page", ["Home", "Data Overview", "Exploratory Data Analysis", "Extras"])
 
 # Function to load data
-uploaded_file = st.sidebar.file_uploader("Upload your Starbucks Excel file", type=["xlsx", "xls"])
+def load_data(uploaded_file):
+    try:
+        df = pd.read_excel(uploaded_file)
+        return df
+    except Exception as e:
+        st.error(f"Error: {e}")
+        return None
+
 
 
 # Data Preparation
