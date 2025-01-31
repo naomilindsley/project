@@ -39,6 +39,7 @@ elif page == "Data Overview":
     st.subheader("Upload Your Dataset")
     uploaded_file = st.file_uploader("Upload your Excel file", type=["xlsx", "xls"])
     if uploaded_file is not None:
+    if uploaded_file.name.endswith(('.xlsx', '.xls')):
         df = load_data(uploaded_file)
         if df is not None:
             st.write("### Preview of the Dataset:")
@@ -46,7 +47,8 @@ elif page == "Data Overview":
             st.write("### Summary Statistics:")
             st.write(df.describe())
     else:
-        st.warning("Please upload a dataset to view its overview.")
+        st.error("Please upload a valid Excel file with .xlsx or .xls extension.")
+
 
 # Exploratory Data Analysis (EDA) Page
 elif page == "Exploratory Data Analysis":
