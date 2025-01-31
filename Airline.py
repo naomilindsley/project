@@ -10,13 +10,25 @@ st.set_page_config(page_title="Airline Satisfaction Prediction", page_icon="✈�
 page = st.sidebar.selectbox("Select a Page", ["Home", "Data Overview", "Exploratory Data Analysis", "Extras"])
 
 # Function to load data
+def load_data(uploaded_file):
+    try:
+        df = pd.read_csv(uploaded_file)
+        return df
+    except Exception as e:
+        st.error(f"Error: Unable to read the uploaded file. {e}")
+        return None
+
 # Data Preparation
 st.title("Upload and Display Dataset")
 
 uploaded_file = st.file_uploader("Upload your file (csv)", type=["csv"])
-pd.read_csv(uploaded_file)
-st.write("Uploaded file preview:")
-# Home Page
+df = None
+if uploaded_file is not None:
+    df = load_data(uploaded_file)
+    if df is not None:
+        st.write("Uploaded file preview:")
+        st.dataframe(df)
+
 # Home Page
 if page == "Home":
     st.title("Airline Satisfaction Prediction Project ✈️")
@@ -38,26 +50,35 @@ if page == "Home":
 # Data Overview Page
 if page == "Data Overview":
     st.title("Data Overview")
-    
+    if df is not None:
+        st.write("### Preview of the Dataset:")
+        st.dataframe(df)
+        st.write("### Summary Statistics:")
+        st.write(df.describe())
+    else:
+        st.warning("Please upload a dataset to view the overview.")
 
 # Exploratory Data Analysis (EDA) Page
-if page == "Exploratory Data Analysis":
+elif page == "Exploratory Data Analysis":
     st.title("Exploratory Data Analysis 📊")
-    
+    if df is not None:
+        # Identify numeric and categorical columns
+        num_cols = df.select_dtypes(include=["number"]).columns.tolist()
+        obj_cols = df.select_dtypes(include=["object"]).columns.tolist()
 
- # Select Visualization Type
-    st.subheader("Select a Visualization:")
-    eda_type = st.multiselect("Choose visualization(s):", ["Histogram", "Box Plot", "Bar Plot"])
+        # Select Visualization Type
+        st.subheader("Select a Visualization:")
+        eda_type = st.multiselect("Choose visualization(s):", ["Histogram", "Box Plot", "Bar Plot"])
 
         # Histogram
-if "Histogram" in eda_type:
+        if "Histogram" in eda_type:
             st.subheader("Histogram")
             selected_col = st.selectbox("Select a numerical column:", num_cols, key="histogram")
             if selected_col:
                 st.plotly_chart(px.histogram(df, x=selected_col, title=f"Histogram of {selected_col}"))
 
         # Box Plot
-if "Box Plot" in eda_type:
+        if "Box Plot" in eda_type:
             st.subheader("Box Plot")
             y_col = st.selectbox("Select a column for Box Plot (y-axis):", num_cols, key="box_y")
             x_col = st.selectbox("Select a column for Box Plot (x-axis):", obj_cols, key="box_x")
@@ -65,17 +86,17 @@ if "Box Plot" in eda_type:
                 st.plotly_chart(px.box(df, x=x_col, y=y_col, title=f"Box Plot: {y_col} vs {x_col}", color=x_col))
 
         # Bar Plot
-if "Bar Plot" in eda_type:
+        if "Bar Plot" in eda_type:
             st.subheader("Bar Plot")
             x_col = st.selectbox("Select x-axis (categorical):", obj_cols, key="bar_x")
             y_col = st.selectbox("Select y-axis (numerical):", num_cols, key="bar_y")
             if x_col and y_col:
                 st.plotly_chart(px.bar(df, x=x_col, y=y_col, title=f"Bar Plot: {y_col} by {x_col}", color=x_col))
-else:
+    else:
         st.warning("Please upload a dataset to perform EDA.")
 
 # Extras Page
-if page == "Extras":
+elif page == "Extras":
     st.title("Useful Information")
     st.subheader("Airline Demand-Supply Imbalance is Good for Revenue, Tough on Customer Experience, Says J.D. Power")
     st.write(
