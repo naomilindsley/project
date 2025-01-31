@@ -47,9 +47,9 @@ elif page == "Data Overview":
         st.warning("Please upload a dataset to view the overview.")
 
 # Exploratory Data Analysis (EDA) Page
-elif page == "Exploratory Data Analysis":
+if page == "Exploratory Data Analysis":
     st.title("Exploratory Data Analysis 📊")
-    if df is not None:
+    elif df is not None:
         # Identify numeric and categorical columns
         num_cols = df.select_dtypes(include=["number"]).columns.tolist()
         obj_cols = df.select_dtypes(include=["object"]).columns.tolist()
