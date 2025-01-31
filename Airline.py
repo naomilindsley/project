@@ -11,6 +11,13 @@ page = st.sidebar.selectbox("Select a Page", ["Home", "Data Overview", "Explorat
 
 # Function to load data
 # Data Preparation
+uploaded_file = st.file_uploader("Upload your Excel file", type=["xlsx", "xls"])
+
+if uploaded_file is not None:
+    df = load_data(uploaded_file)
+    if df is not None:
+        st.dataframe(df)  # Display the uploaded data
+
 uploaded_file = st.sidebar.file_uploader("Upload your Starbucks Excel file", type=["xlsx", "xls"])
 if uploaded_file is not None:
     try:
