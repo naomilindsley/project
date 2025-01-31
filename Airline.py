@@ -51,9 +51,9 @@ if page == "Exploratory Data Analysis":
     st.title("Exploratory Data Analysis 📊")
     
 
-        # Select Visualization Type
-        st.subheader("Select a Visualization:")
-        eda_type = st.multiselect("Choose visualization(s):", ["Histogram", "Box Plot", "Bar Plot"])
+ # Select Visualization Type
+    st.subheader("Select a Visualization:")
+    eda_type = st.multiselect("Choose visualization(s):", ["Histogram", "Box Plot", "Bar Plot"])
 
         # Histogram
         if "Histogram" in eda_type:
