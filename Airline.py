@@ -9,27 +9,10 @@ st.set_page_config(page_title="Airline Satisfaction Prediction", page_icon="âœˆï
 # Sidebar for navigation
 page = st.sidebar.selectbox("Select a Page", ["Home", "Data Overview", "Exploratory Data Analysis", "Extras"])
 
-# Function to load data
-import streamlit as st
-import pandas as pd
 
-def load_data(uploaded_file):
-    try:
-        df = pd.read_excel(uploaded_file)
-        return df
-    except Exception as e:
-        st.error(f"Error: {e}")
-        return None
-
-# Usage in Streamlit app
 uploaded_file = st.file_uploader("Upload your Excel file", type=["xlsx", "xls"])
 if uploaded_file is not None:
-    df = load_data(uploaded_file)
-    if df is not None:
-        st.write("### Preview of the Dataset:")
-        st.dataframe(df)
-        st.write("### Summary Statistics:")
-        st.write(df.describe())
+    if uploaded_file.name.endswith(('.xlsx', '.xls')):  # This is redundant
 
 
 # Home Page
