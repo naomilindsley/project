@@ -81,7 +81,7 @@ else:
         st.warning("Please upload a dataset to perform EDA.")
 
 # Extras Page
-elif page == "Extras":
+if page == "Extras":
     st.title("Useful Information")
     st.subheader("Airline Demand-Supply Imbalance is Good for Revenue, Tough on Customer Experience, Says J.D. Power")
     st.write(
