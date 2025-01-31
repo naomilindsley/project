@@ -36,15 +36,9 @@ if page == "Home":
         st.image(image, caption="Uploaded Image", use_column_width=True)
 
 # Data Overview Page
-elif page == "Data Overview":
+if page == "Data Overview":
     st.title("Data Overview")
-    if df is not None:
-        st.write("### Preview of the Dataset:")
-        st.dataframe(df)
-        st.write("### Summary Statistics:")
-        st.write(df.describe())
-    else:
-        st.warning("Please upload a dataset to view the overview.")
+    
 
 # Exploratory Data Analysis (EDA) Page
 if page == "Exploratory Data Analysis":
