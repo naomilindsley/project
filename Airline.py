@@ -11,13 +11,7 @@ page = st.sidebar.selectbox("Select a Page", ["Home", "Data Overview", "Explorat
 
 # Function to load data
 uploaded_file = st.sidebar.file_uploader("Upload your Starbucks Excel file", type=["xlsx", "xls"])
-def load_data(uploaded_file):
-    try:
-        df = pd.read_csv(uploaded_file)
-        return df
-    except Exception as e:
-        st.error(f"Error: Unable to read the uploaded file. {e}")
-        return None
+
 
 # Data Preparation
 st.title("Upload and Display Dataset")
